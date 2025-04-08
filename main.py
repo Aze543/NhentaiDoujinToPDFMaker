@@ -87,7 +87,7 @@ def main(on):
         compile_images(url_images, name)
         la = True
         function_thread.join()
-        print(f"\nThe Operation was success, the file was saved into '{name}'")
+        print(f"\nThe Operation was success, the file was saved into '{name}.pdf'")
         user_response = input("\nstill need then app to create another pdf(Y or N)?\n").lower()
         if not user_response == 'y' or user_response == 'yes':
             print("Exiting.....")
