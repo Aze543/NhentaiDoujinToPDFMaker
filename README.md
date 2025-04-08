@@ -2,6 +2,9 @@
 
 ---------------------------------------------------------------------------------
 
+A disgusting python script that lets you compile a doujin from nhentai.net 
+into a pdf for offline goon reading.
+
 I use MacOS, so the instructions for windows might be not accurate 
 but I tried my best :)
 
