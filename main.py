@@ -69,7 +69,7 @@ def main(on):
         try: 
             code = int(input("Type the code(IYKYK): "))
         except Exception as e:
-            print("\nThe code needs to be numbers not letters (Ex: 177013) :) \n")
+            print("\nThe code needs to be numbers (Ex: 177013) :) \n")
             continue
         url = f'https://nhentai.net/g/{code}/'
         response = requests.get(url)
