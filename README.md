@@ -2,7 +2,8 @@
 
 ---------------------------------------------------------------------------------
 
-I use MacOS, so I might know how to run it on windows but i'll try my best
+I use MacOS, so the instructions for windows might be not accurate 
+but I tried my best :)
 
 ---------------------------------------------------------------------------------
 
