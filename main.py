@@ -7,8 +7,7 @@ import sys
 import time
 import threading
 
-on = True
-la = False
+
 logo = """
 .##..##..##..##..######..##..##..######...####...######.                        
 .###.##..##..##..##......###.##....##....##..##....##...                        
@@ -31,18 +30,15 @@ logo = """
 """
 
 def loading_animation():
-    global la
+    global la, pages, page_num
     spinner = ['|', '/', '-', '\\']
     while not la:
         for frame in spinner:
-            sys.stdout.write(f'\rLet the magic work... {frame}')
+            sys.stdout.write(f'\rDownloading the pages ({page_num}/{pages})...{frame}')
             sys.stdout.flush()
             time.sleep(0.1)
             if la:  
-                sys.stdout.flush()
                 break
-    sys.stdout.write('\rLet the magic work...   ')  
-    sys.stdout.flush()
 
 def get_images(raw: list, pages: int) -> list:
     imgs= []
@@ -55,20 +51,25 @@ def get_images(raw: list, pages: int) -> list:
             return imgs
         
 def compile_images(urls: list, name: str) -> NoReturn:
+    global page_num
     raw_images = []
     for url in urls:
+        page_num += 1
         response = requests.get(url)
         raw_images.append(response.content)
+        sys.stdout.flush()
     with open(f"{name}.pdf", "wb") as file:
         file.write(img2pdf.convert(raw_images))
 
 def main(on):
-    global la
-    print(f"{logo}\n\n")
+    global la, page_num, pages
+    print(f"{logo}\n")
     while on:
+        la = False
+        page_num = 0
         try: 
-            code = int(input("Type the code(IYKYK): "))
-        except Exception as e:
+            code = int(input("\nType the code(IYKYK): "))
+        except Exception:
             print("\nThe code needs to be numbers (Ex: 177013) :) \n")
             continue
         url = f'https://nhentai.net/g/{code}/'
@@ -77,21 +78,26 @@ def main(on):
             soup = BeautifulSoup(response.text, "html.parser")
             pages = len(soup.find_all(class_='gallerythumb'))
             name = soup.find(class_='pretty').text
+            author = soup.find(class_='before').text
             raw_data = soup.find_all(class_='lazyload')
-        except Exception as e:
+            if not author:
+                author = '[NAME-MISSING]: They forgot to put the author name in the website.'
+        except Exception:
             print("\n[ERROR]: The code cannot be found in the website.\n")
             continue
+        url_images = get_images(raw_data, pages)
+        print(f"\nH-Doujin Details:\nname: {name}\nauthor: {author}\npages: {pages}\n")
+
         function_thread = threading.Thread(target=loading_animation)
         function_thread.start()
-        url_images = get_images(raw_data, pages)
         compile_images(url_images, name)
         la = True
         function_thread.join()
-        print(f"\nThe Operation was success, the file was saved into '{name}.pdf'")
-        user_response = input("\nstill need then app to create another pdf(Y or N)?\n").lower()
+        print(f"\n\nOperation was success, the file was saved into the same directory.")
+        user_response = input("\nstill need then app to create another pdf (Y or N)?\n").lower()
         if not user_response == 'y' or user_response == 'yes':
             print("Exiting.....")
             on = False
 
 if __name__ == "__main__":
-    main(on)
+    main(on=True)
