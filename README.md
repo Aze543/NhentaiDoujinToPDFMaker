@@ -5,12 +5,56 @@
 A disgusting python script that lets you compile a doujin from nhentai.net 
 into a pdf for offline goon reading.
 
-I use MacOS, so the instructions for windows might be not accurate 
-but I tried my best :)
+This application has two flavors:
+
+FIRST:
+a command-line version where you can use the command nhpdf to run the script
+
+nhpdf <hdoujin-code>
+
+SECOND:
+a python script that needs to be run using the python or python3 command
+
+python main.py
+python3 main.py
+
+The Instruction below is for the second flavor. I use MacOS, so the
+instructions for windows might be not accurate but I tried my best :)
+
+download link: https://github.com/Aze543/NhentaiDoujinToPDFMaker.git
+
 
 ---------------------------------------------------------------------------------
 
-INSTURCTIONS:
+INSTURCTIONS for the First Flavor:
+
+---------------------------------------------------------------------------------
+
+1. You can either download the first flavor in the releases or download it using
+the pip command
+
+Win/MacOS: pip install nhpdf
+
+* if you've downloaded it, you need to be in the same directory as the
+pyproject.toml, then run the command
+
+Win/MacOS: pip install .
+
+2. enjoy the script, you can run it by typing the command
+
+nhpdf <doujin-code>
+
+Examples:
+nhpdf 566212
+
+it also works if you want to down multiple pdfs
+nhpdf 566212 563102
+   
+---------------------------------------------------------------------------------
+
+INSTURCTIONS for the Second Flavor:
+
+Download the second flavor in the releases.
 
 ---------------------------------------------------------------------------------
 
