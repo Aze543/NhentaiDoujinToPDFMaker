@@ -1,114 +1,148 @@
 # NHENTAI DOUJIN-TO-PDF MAKER
 
----------------------------------------------------------------------------------
+A *disgusting* Python script that compiles doujins from [nhentai.net](https://nhentai.net) into PDFs for **offline gooning**.
 
-A disgusting python script that lets you compile a doujin from nhentai.net 
-into a pdf for offline goon reading.
+This app has two flavors:
 
-This application has two flavors:
+---
 
-FIRST:
-a command-line version where you can use the command nhpdf to run the script
+## 🧱 Flavor 1: CLI Tool (`nhpdf`)
 
-nhpdf <hdoujin-code>
+A command-line interface you can run from anywhere:
 
-SECOND:
-a python script that needs to be run using the python or python3 command
-
-python main.py
-python3 main.py
-
-The Instruction below is for the second flavor. I use MacOS, so the
-instructions for windows might be not accurate but I tried my best :)
-
-download link: https://github.com/Aze543/NhentaiDoujinToPDFMaker.git
-
-
----------------------------------------------------------------------------------
-
-INSTURCTIONS for the First Flavor:
-
----------------------------------------------------------------------------------
-
-1. You can either download the first flavor in the releases or download it using
-the pip command
-
-Win/MacOS: pip install nhpdf
-
-* if you've downloaded it, you need to be in the same directory as the
-pyproject.toml, then run the command
-
-Win/MacOS: pip install .
-
-2. enjoy the script, you can run it by typing the command
-
+```bash
 nhpdf <doujin-code>
+```
 
-Examples:
+Example:
+```bash
 nhpdf 566212
+nhpdf 566212 563102 345987
+```
 
-it also works if you want to down multiple pdfs
-nhpdf 566212 563102
-   
----------------------------------------------------------------------------------
+---
 
-INSTURCTIONS for the Second Flavor:
+### 🔧 How to Install (CLI Version)
 
-Download the second flavor in the releases.
+You can install the CLI tool in two ways:
 
----------------------------------------------------------------------------------
+#### Option 1: From PyPI
 
-1. install python to your system, look in the internet how
+```bash
+pip install nhpdf
+```
 
-    to check if it works
-    
-    windows: open cmd >> type python >> hit enter
-    
-    mac: open terminal >> type python3 >> hit enter
-    
-    it should open the python
+#### Option 2: Locally (Development)
 
----------------------------------------------------------------------------------
+If you’ve cloned this repo:
 
-2. install the requirements in 'requirements.txt'
+```bash
+cd NhentaiDoujinToPDFMaker
+pip install .
+```
 
-    in the cmd or terminal, go into the directory of the file where
-    the main.py and requirements.txt lives
-    
-    directory means folder
-    
-    to check if you're now in the directory
-    
-    windows: the command is dir to see the list of files in the directory
-    
-    mac: type ls
-    
-    finally, type this in the cmd or terminal: pip install -r 'requirements.txt'
-    
-    it should download the packages you need to make the script works
+Now you can run it with:
 
----------------------------------------------------------------------------------
+```bash
+nhpdf 566212
+```
 
-3. last is run the program by typing:
+---
 
-    windows: python main.py
-    
-    mac: python3 main.py
-    
-    if you're greeted with the logo "NHENTAI DOUJIN-TO-PDF MAKER"
-    in the cmd or terminal, you've successfully install and run the script 
-    into your computer, Enjoy!
+## 🐍 Flavor 2: Raw Python Script (`main.py`)
 
----------------------------------------------------------------------------------
+If you prefer to run it like a normal Python script:
 
-HOW TO USE THE SCRIPT:
+```bash
+python main.py
+# or
+python3 main.py
+```
 
----------------------------------------------------------------------------------
+---
 
-type the code of the nhentai doujin you want, then let the magic work
+### 📥 How to Set Up (Script Version)
 
-the output will be in the same directory
+> These instructions focus on **macOS**, but should work on **Windows** too (with small changes).
 
-Dev Note: This Script only works on nhentai.net
+#### 1. Install Python
 
----------------------------------------------------------------------------------
+Search how to install Python for your OS.
+
+Check if Python is installed:
+
+- **Windows**:
+  ```bash
+  python
+  ```
+
+- **macOS**:
+  ```bash
+  python3
+  ```
+
+You should get a Python REPL (interactive shell).
+
+---
+
+#### 2. Install Required Packages
+
+Navigate to the project directory (where `main.py` and `requirements.txt` live):
+
+- **Windows**:
+  ```bash
+  cd path\to\your\folder
+  dir  # list files
+  ```
+
+- **macOS/Linux**:
+  ```bash
+  cd /path/to/your/folder
+  ls  # list files
+  ```
+
+Then install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+#### 3. Run the Script
+
+```bash
+python main.py
+# or
+python3 main.py
+```
+
+You should see:
+
+```
+NHENTAI DOUJIN-TO-PDF MAKER
+```
+
+✅ You’re good to go!
+
+---
+
+## 🧙 How to Use
+
+Type the code of the nhentai doujin you want, then let the magic happen. The PDF will be saved to your **Documents/nhpdf/** folder.
+
+---
+
+> ⚠️ This script only works with [nhentai.net](https://nhentai.net)
+
+---
+
+## 🔗 Download
+
+**GitHub Repo**: [NhentaiDoujinToPDFMaker](https://github.com/Aze543/NhentaiDoujinToPDFMaker)
+
+You can download either version from the **[Releases](https://github.com/Aze543/NhentaiDoujinToPDFMaker/releases)** page.
+
+---
+
+Enjoy responsibly 😅
