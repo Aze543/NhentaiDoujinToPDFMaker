@@ -24,7 +24,7 @@ nhpdf 566212 563102 345987
 
 ### 🔧 How to Install (CLI Version)
 
-You can install the CLI tool directly from the PyPI as long as you have Python:
+You can install the CLI tool directly from the PyPI as long as you have Python (Refer to the 2nd flavors first step to install it):
 
 ```bash
 pip install nhpdf
@@ -50,13 +50,13 @@ python3 main.py
 
 ---
 
-### 📥 How to Set Up (Script Version)
+### 📥 How to Set Up the Script
 
 > These instructions focus on **macOS**, but should work on **Windows** too (with small changes).
 
 #### 1. Install Python
 
-Search how to install Python for your OS.
+Go to the [PythonWebsite](https://www.python.org/downloads/) to install Python for your OS.
 
 Check if Python is installed:
 
