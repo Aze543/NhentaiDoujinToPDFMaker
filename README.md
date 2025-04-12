@@ -65,7 +65,7 @@ Check if Python is installed:
   python
   ```
 
-- **macOS**:
+- **macOS/Linux**:
   ```bash
   python3
   ```
