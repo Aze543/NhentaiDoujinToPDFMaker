@@ -108,7 +108,7 @@ python main.py
 python3 main.py
 ```
 
-You should see:
+You should see an ascii logo:
 
 ```
 NHENTAI DOUJIN-TO-PDF MAKER
