@@ -32,15 +32,6 @@ You can install the CLI tool in two ways:
 pip install nhpdf
 ```
 
-#### Option 2: Locally (Development)
-
-If you’ve cloned this repo:
-
-```bash
-cd NhentaiDoujinToPDFMaker
-pip install .
-```
-
 Now you can run it with:
 
 ```bash
