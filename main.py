@@ -2,11 +2,16 @@ import img2pdf # type: ignore
 import requests
 from typing import NoReturn
 from bs4 import BeautifulSoup
+from concurrent.futures import ThreadPoolExecutor
 import re
 import sys
 import time
 import threading
+from math import trunc
+from pathlib import Path
 
+nhpdf_dir = Path.home()/"Documents"/"nhpdf"
+nhpdf_dir.mkdir(parents=True, exist_ok=True) 
 
 logo = """
 .##..##..##..##..######..##..##..######...####...######.                        
@@ -29,44 +34,44 @@ logo = """
 .........................................................................         
 """
 
-def loading_animation():
-    global la, pages, page_num
+def loading_animation() -> NoReturn:
+    global la, pages, page
     spinner = ['|', '/', '-', '\\']
     while not la:
         for frame in spinner:
-            sys.stdout.write(f'\rDownloading the pages ({page_num}/{pages})...{frame}')
+            sys.stdout.write(f'\rDownloading the pages ({trunc(((page-1)/pages)*100)}%/{100}%)...{frame}')
             sys.stdout.flush()
             time.sleep(0.1)
             if la:  
+                sys.stdout.write(f'\rDownloading the pages (100%/100%)...{frame}')
+                sys.stdout.flush()
                 break
 
-def get_images(raw: list, pages: int) -> list:
-    imgs= []
-    page = 1
-    for item in raw:
-        img_code, f_type = re.search(r'/(\d+)', item['data-src']).group(), re.search(r'\.([a-zA-Z0-9]+)$', item['data-src']).group()
-        imgs.append(f'https://i3.nhentai.net/galleries{img_code}/{page}{f_type}')
-        page += 1
-        if page > pages:
-            return imgs
-        
-def compile_images(urls: list, name: str) -> NoReturn:
-    global page_num
-    raw_images = []
-    for url in urls:
-        page_num += 1
-        response = requests.get(url)
-        raw_images.append(response.content)
-        sys.stdout.flush()
-    with open(f"{name}.pdf", "wb") as file:
+
+def download_image(raw_url: str) -> bytes:
+    global pages, page
+    page += 1
+    img_code, f_type = re.search(r'/(\d+)', raw_url['data-src']).group(), re.search(r'\b(.(jpg|jpeg|png|webp))\b', raw_url['data-src']).group()
+    url = f'https://i3.nhentai.net/galleries{img_code}/{page}{f_type}'
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.content
+    return None
+
+def compile_images(raw: list, name: str) -> NoReturn:
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        raw_images = list(executor.map(download_image, raw))
+    nhpdf = nhpdf_dir/f"{name}.pdf"
+    with open(nhpdf, "wb") as file:
         file.write(img2pdf.convert(raw_images))
 
+
 def main(on):
-    global la, page_num, pages
+    global la, page, pages
     print(f"{logo}\n")
     while on:
         la = False
-        page_num = 0
+        page = 0
         try: 
             code = int(input("\nType the code(IYKYK): "))
         except Exception:
@@ -85,12 +90,11 @@ def main(on):
         except Exception:
             print("\n[ERROR]: The code cannot be found in the website.\n")
             continue
-        url_images = get_images(raw_data, pages)
         print(f"\nH-Doujin Details:\nname: {name}\nauthor: {author}\npages: {pages}\n")
-
+        raw_data.remove(raw_data[0])
         function_thread = threading.Thread(target=loading_animation)
         function_thread.start()
-        compile_images(url_images, name)
+        compile_images(raw_data[:pages], name)
         la = True
         function_thread.join()
         print(f"\n\nOperation was success, the file was saved into the same directory.")
