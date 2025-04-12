@@ -130,7 +130,7 @@ Type the code of the nhentai doujin you want, then let the magic happen. The PDF
 
 **GitHub Repo**: [NhentaiDoujinToPDFMaker](https://github.com/Aze543/NhentaiDoujinToPDFMaker)
 
-You can download either version from the **[Releases](https://github.com/Aze543/NhentaiDoujinToPDFMaker/releases)** page.
+You can download the script version from the **[Releases](https://github.com/Aze543/NhentaiDoujinToPDFMaker/releases)** page.
 
 ---
 
