@@ -24,9 +24,7 @@ nhpdf 566212 563102 345987
 
 ### 🔧 How to Install (CLI Version)
 
-You can install the CLI tool in two ways:
-
-#### Option 1: From PyPI
+You can install the CLI tool directly from the PyPI as long as you have Python:
 
 ```bash
 pip install nhpdf
