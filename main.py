@@ -51,7 +51,7 @@ def loading_animation() -> NoReturn:
 def download_image(raw_url: str) -> bytes:
     global pages, page
     page += 1
-    img_code, f_type = re.search(r'/(\d+)', raw_url['data-src']).group(), re.search(r'\b(.(jpg|jpeg|png|webp))\b', raw_url['data-src']).group()
+    img_code, f_type = re.search(r'/(\d+)', raw_url['data-src']).group(), re.search(r'\b(.(jpg|jpeg|png|webp|gif|tiff|svg))\b', raw_url['data-src']).group()
     url = f'https://i3.nhentai.net/galleries{img_code}/{page}{f_type}'
     response = requests.get(url)
     if response.status_code == 200:
