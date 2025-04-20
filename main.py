@@ -1,4 +1,4 @@
-import img2pdf # type: ignore
+import img2pdf
 import requests
 from typing import NoReturn
 from bs4 import BeautifulSoup
@@ -9,6 +9,8 @@ import time
 import threading
 from math import trunc
 from pathlib import Path
+import io
+from PIL import Image
 
 nhpdf_dir = Path.home()/"Documents"/"nhpdf"
 nhpdf_dir.mkdir(parents=True, exist_ok=True) 
@@ -55,7 +57,8 @@ def download_image(raw_url: str) -> bytes:
     url = f'https://i3.nhentai.net/galleries{img_code}/{page}{f_type}'
     response = requests.get(url)
     if response.status_code == 200:
-        return response.content
+        content = check_alpha(response.content)
+        return content
     return None
 
 def compile_images(raw: list, name: str) -> NoReturn:
@@ -65,6 +68,17 @@ def compile_images(raw: list, name: str) -> NoReturn:
     with open(nhpdf, "wb") as file:
         file.write(img2pdf.convert(raw_images))
 
+def check_alpha(image: bytes) -> bytes:
+    try:
+        img2pdf.convert(image)
+    except img2pdf.AlphaChannelError:
+        buffered = io.BytesIO(image)
+        img = Image.open(buffered)
+        converted: Image = img.convert('RGB')
+        buf = io.BytesIO()
+        converted.save(buf, format='PNG')
+        image = buf.getvalue() 
+    return image
 
 def main(on):
     global la, page, pages
@@ -100,7 +114,7 @@ def main(on):
         print(f"\n\nOperation was success, the file was saved into the same directory.")
         user_response = input("\nstill need then app to create another pdf (Y or N)?\n").lower()
         if not user_response == 'y' or user_response == 'yes':
-            print("Exiting.....")
+            print("\nExiting.....")
             on = False
 
 if __name__ == "__main__":
