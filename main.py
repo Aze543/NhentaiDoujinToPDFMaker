@@ -1,5 +1,5 @@
 import img2pdf
-import requests
+import cloudscraper
 from typing import NoReturn
 from bs4 import BeautifulSoup
 from concurrent.futures import ThreadPoolExecutor
@@ -14,6 +14,13 @@ from PIL import Image
 
 nhpdf_dir = Path.home()/"Documents"/"nhpdf"
 nhpdf_dir.mkdir(parents=True, exist_ok=True) 
+
+scrapper = cloudscraper.create_scraper(
+    browser={
+        "browser": "chrome",
+        "platform": "windows",
+    }
+)
 
 logo = """
 .##..##..##..##..######..##..##..######...####...######.                        
@@ -49,13 +56,12 @@ def loading_animation() -> NoReturn:
                 sys.stdout.flush()
                 break
 
-
 def download_image(raw_url: str) -> bytes:
     global pages, page
     page += 1
     img_code, f_type = re.search(r'/(\d+)', raw_url['data-src']).group(), re.search(r'\b(.(jpg|jpeg|png|webp|gif|tiff|svg))\b', raw_url['data-src']).group()
     url = f'https://i3.nhentai.net/galleries{img_code}/{page}{f_type}'
-    response = requests.get(url)
+    response = scrapper.get(url)
     if response.status_code == 200:
         content = check_alpha(response.content)
         return content
@@ -92,7 +98,7 @@ def main(on):
             print("\nThe code needs to be numbers (Ex: 177013) :) \n")
             continue
         url = f'https://nhentai.net/g/{code}/'
-        response = requests.get(url)
+        response = scrapper.get(url)
         try: 
             soup = BeautifulSoup(response.text, "html.parser")
             pages = len(soup.find_all(class_='gallerythumb'))
@@ -111,9 +117,9 @@ def main(on):
         compile_images(raw_data[:pages], name)
         la = True
         function_thread.join()
-        print(f"\n\nOperation was success, the file was saved into the same directory.")
+        print(f"\n\nOperation was success, the file was saved to the nhpdf folder in your documents folder.")
         user_response = input("\nstill need then app to create another pdf (Y or N)?\n").lower()
-        if not user_response == 'y' or user_response == 'yes':
+        if user_response == 'y' or user_response == 'yes':
             print("\nExiting.....")
             on = False
 
